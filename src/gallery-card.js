@@ -4,16 +4,20 @@ export const createGalleryCrd = hits => {
       <img src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" />
       <div class="info">
         <p class="info-item">
-          <b>Likes${hit.likes}</b>
+          <b>Likes</b>
+          ${hit.likes}
         </p>
         <p class="info-item">
-          <b>Views${hit.views}</b>
+          <b>Views</b>
+          ${hit.views}
         </p>
         <p class="info-item">
-          <b>Comments${hit.comments}</b>
+          <b>Comments</b>
+          ${hit.comments}
         </p>
         <p class="info-item">
-          <b>Downloads${hit.downloads}</b>
+          <b>Downloads</b>
+          ${hit.downloads}
         </p>
       </div>
     </div>`;

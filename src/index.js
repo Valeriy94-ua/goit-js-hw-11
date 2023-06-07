@@ -12,52 +12,122 @@ const refs = {
   form: document.querySelector('#search-form'),
   loadMoreBtn: document.querySelector('.load-more'),
 };
-
+//////////////////////////////////////////
+// ------------VAR WITH ASYNC--------------
+//////////////////////////////////////////
 const unsplashAPI = new UnsplashAPI();
-console.log(unsplashAPI);
+console.log(unsplashAPI.per_page);
 
-const inputSearch = e => {
+const inputSearch = async e => {
   e.preventDefault();
   unsplashAPI.page = 1;
-  unsplashAPI.query = e.target.elements.searchQuery.value.trim();
+  unsplashAPI.query = e.target.elements.searchQuery.value.trim().toLowerCase();
 
-  unsplashAPI
-    .getImgByFetch()
-    .then(data => {
-      console.log(data);
-      console.log(createGalleryCrd(data.hits));
+  try {
+    const { data } = await unsplashAPI.getImgByFetch();
+    console.log(data);
+    console.log(data.hits);
 
-      if (data.totalHits === 0) {
-        return;
-      }
-      if (data.totalHits !== 1) {
-        refs.loadMoreBtn.classList.remove('is-hidden');
-      }
+    if (data.totalHits === 0) {
+      refs.gallery.innerHTML = '';
+      refs.loadMoreBtn.classList.add('is-hidden');
+      serchFailure();
+      return;
+    }
+
+    if (data.totalHits <= 41) {
       refs.gallery.innerHTML = createGalleryCrd(data.hits);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      return;
+      // refs.loadMoreBtn.classList.add('is-hidden');
+    }
+
+    refs.gallery.innerHTML = createGalleryCrd(data.hits);
+    refs.loadMoreBtn.classList.remove('is-hidden');
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-const onLoadMoreBtn = e => {
+const onLoadMoreBtn = async e => {
   unsplashAPI.page += 1;
 
-  unsplashAPI
-    .getImgByFetch()
-    .then(data => {
-      refs.gallery.insertAdjacentHTML('beforeend', createGalleryCrd(data.hits));
-      console.log(createGalleryCrd(data.hits));
+  try {
+    const { data } = await unsplashAPI.getImgByFetch();
 
-      if (unsplashAPI.page === data.totalHits) {
-        refs.loadMoreBtn.classList.add('is-hidden');
-        //   Notiflix.Notify.failure('We're sorry, but you've reached the end of search results.')
-      }
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    refs.gallery.insertAdjacentHTML('beforeend', createGalleryCrd(data.hits));
+
+    if (unsplashAPI.page === Math.ceil(data.totalHits / 40)) {
+      refs.loadMoreBtn.classList.add('is-hidden');
+      searchResFinish();
+    }
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 refs.form.addEventListener('submit', inputSearch);
 refs.loadMoreBtn.addEventListener('click', onLoadMoreBtn);
+
+function serchFailure() {
+  Notiflix.Notify.failure(
+    'Sorry, there are no images matching your search query. Please try again.'
+  );
+}
+
+function searchResFinish() {
+  Notiflix.Notify.info(
+    'We are sorry, but you have reached the end of search results.'
+  );
+}
+// console.log(data);
+// console.log(createGalleryCrd(data.hits));
+
+// ------------VAR WITH FETCH--------------
+// const unsplashAPI = new UnsplashAPI();
+// console.log(unsplashAPI);
+
+// const inputSearch = e => {
+//   e.preventDefault();
+//   unsplashAPI.page = 1;
+//   unsplashAPI.query = e.target.elements.searchQuery.value.trim();
+
+//   unsplashAPI
+//     .getImgByFetch()
+//     .then(data => {
+//       // console.log(data);
+//       // console.log(createGalleryCrd(data.hits));
+
+//       if (data.totalHits === 0) {
+//         return;
+//       }
+//       if (data.totalHits !== 1) {
+//         refs.loadMoreBtn.classList.remove('is-hidden');
+//       }
+//       refs.gallery.innerHTML = createGalleryCrd(data.hits);
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// };
+
+// const onLoadMoreBtn = e => {
+//   unsplashAPI.page += 1;
+
+//   unsplashAPI
+//     .getImgByFetch()
+//     .then(data => {
+//       refs.gallery.insertAdjacentHTML('beforeend', createGalleryCrd(data.hits));
+//       if (unsplashAPI.page === data.totalHits) {
+//         refs.loadMoreBtn.classList.add('is-hidden');
+//         Notiflix.Notify.failure(
+//           'We are sorry, but you have reached the end of search results.'
+//         );
+//       }
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// };
+
+// refs.form.addEventListener('submit', inputSearch);
+// refs.loadMoreBtn.addEventListener('click', onLoadMoreBtn);
