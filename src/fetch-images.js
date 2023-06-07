@@ -15,7 +15,7 @@ export class UnsplashAPI {
       orientation: 'horizontal',
       safesearch: true,
       page: `${this.page}`,
-      per_page: 20,
+      per_page: 5,
     });
     return fetch(`${UnsplashAPI.URL}api/?${searchParams}`).then(response => {
       if (!response.ok) {
