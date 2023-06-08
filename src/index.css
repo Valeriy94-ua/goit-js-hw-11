@@ -52,7 +52,7 @@ input {
 .load-more:focus {
   border: 1px solid white;
   color: white;
-  background-color: tomato;
+  background-color: #57504d;
 }
 
 .is-hidden {
