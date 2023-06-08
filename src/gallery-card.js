@@ -2,9 +2,11 @@ export const createGalleryCrd = hits => {
   const imagesArr = hits.map(hit => {
     return `
     <div class="photo-card">
-      <a href="${hit.largeImageURL}" class="img-link">
-        <img class="img-image" src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" />
-      </a>
+      <div class="img-cont">
+        <a href="${hit.largeImageURL}" class="img-link">
+          <img class="img-image" src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" />
+        </a>
+      </div>
       <div class="info">
         <p class="info-item">
           <b>Likes</b>
