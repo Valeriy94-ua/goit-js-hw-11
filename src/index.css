@@ -34,7 +34,7 @@ input {
 }
 .input-btn:hover,
 .input-btn:focus {
-  background-color: #e3dedd;
+  background-color: #57504d;
   color: white;
   border: 1px solid white;
 }
