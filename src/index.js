@@ -15,7 +15,7 @@ const refs = {
 const lightbox = new SimpleLightbox('.gallery a', {
   captions: true,
   overlay: true,
-  overlayOpacity: 0.9,
+  overlayOpacity: 0.6,
   captionDelay: 250,
 });
 

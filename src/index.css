@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  background-color: #e3dedd;
 }
 
 button {
@@ -16,20 +17,24 @@ input {
   border-radius: 5px;
   padding: 0 10px;
   font-size: 15px;
-  background-color: tomato;
+  background-color: #e3dedd;
+  border-color: gray;
+  /* /* border-left: none; */
+  border-bottom-color: gray;
+  /* border-style: none; */
 }
 
 .input-btn {
   color: gray;
-  background-color: white;
+  background-color: #e3dedd;
   border-radius: 5px;
-  border: 1px solid tomato;
+  border: 1px solid gray;
   padding: 0 26px;
   font-size: 15px;
 }
 .input-btn:hover,
 .input-btn:focus {
-  background-color: tomato;
+  background-color: #e3dedd;
   color: white;
   border: 1px solid white;
 }
@@ -54,9 +59,8 @@ input {
   display: none;
 }
 .photo-card {
-  width: 300px;
+  border-radius: 7px;
   box-shadow: 0 1px 3px #0003, 0 1px 1px #00000024, 0 2px 1px -1px #0000001f;
-  overflow: hidden;
 }
 .img-link {
   height: 100%;
@@ -74,6 +78,8 @@ input {
   transform: scale(1.1);
 }
 .img-cont {
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
   width: 300px;
   height: 200px;
   overflow: hidden;
@@ -83,7 +89,7 @@ input {
   margin-right: auto;
   margin-left: auto;
   height: 80px;
-  background-color: tomato;
+  background-color: #0e5d86;
 }
 
 .container {
@@ -114,6 +120,7 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: gray;
 }
 
 /* ------------SEARCH INPUT--------------- */
