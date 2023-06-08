@@ -12,6 +12,13 @@ const refs = {
   form: document.querySelector('#search-form'),
   loadMoreBtn: document.querySelector('.load-more'),
 };
+const lightbox = new SimpleLightbox('.gallery a', {
+  captions: true,
+  overlay: true,
+  overlayOpacity: 0.9,
+  captionDelay: 250,
+});
+
 //////////////////////////////////////////
 // ------------VAR WITH ASYNC--------------
 //////////////////////////////////////////
@@ -35,14 +42,20 @@ const inputSearch = async e => {
       return;
     }
 
+    if (unsplashAPI.query === '') {
+      serchFailure();
+      return;
+    }
     if (data.totalHits <= 41) {
       refs.gallery.innerHTML = createGalleryCrd(data.hits);
+      lightbox.refresh();
       return;
       // refs.loadMoreBtn.classList.add('is-hidden');
     }
 
     refs.gallery.innerHTML = createGalleryCrd(data.hits);
     refs.loadMoreBtn.classList.remove('is-hidden');
+    lightbox.refresh();
   } catch (err) {
     console.log(err);
   }
@@ -55,6 +68,7 @@ const onLoadMoreBtn = async e => {
     const { data } = await unsplashAPI.getImgByFetch();
 
     refs.gallery.insertAdjacentHTML('beforeend', createGalleryCrd(data.hits));
+    lightbox.refresh();
 
     if (unsplashAPI.page === Math.ceil(data.totalHits / 40)) {
       refs.loadMoreBtn.classList.add('is-hidden');
@@ -79,6 +93,7 @@ function searchResFinish() {
     'We are sorry, but you have reached the end of search results.'
   );
 }
+
 // console.log(data);
 // console.log(createGalleryCrd(data.hits));
 

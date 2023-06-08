@@ -1,7 +1,10 @@
 export const createGalleryCrd = hits => {
   const imagesArr = hits.map(hit => {
-    return `<div class="photo-card">
-      <img src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" />
+    return `
+    <div class="photo-card">
+      <a href="${hit.largeImageURL}" class="img-link">
+        <img class="img-image" src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" />
+      </a>
       <div class="info">
         <p class="info-item">
           <b>Likes</b>
@@ -24,3 +27,7 @@ export const createGalleryCrd = hits => {
   });
   return imagesArr.join('');
 };
+
+// <a href="${hit.webformatURL}" class="img-link">
+//   <img src="${hit.largeImageURL}" alt="${hit.tags}" loading="lazy" />
+// </a>;
